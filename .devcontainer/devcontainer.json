@@ -1,0 +1,30 @@
+{
+  "name": "Bun",
+  "dockerFile": "Dockerfile",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "nodeGypDependencies": true,
+      "installYarnUsingApt": true,
+      "version": "lts",
+      "pnpmVersion": "latest",
+      "nvmVersion": "latest"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "oven.bun-vscode",
+        "formulahendry.auto-rename-tag",
+        "dsznajder.es7-react-js-snippets",
+        "Postman.postman-for-vscode",
+        "esbenp.prettier-vscode",
+        "YoavBls.pretty-ts-errors",
+        "bradlc.vscode-tailwindcss"
+      ]
+    }
+  },
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+  ],
+  "workspaceFolder": "/workspace"
+}
