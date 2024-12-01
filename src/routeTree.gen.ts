@@ -8,92 +8,87 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
-
 // Import Routes
 
-import { Route as rootRoute } from './routes/__root'
-
-// Create Virtual Routes
-
-const HomeLazyImport = createFileRoute('/home')()
-const IndexLazyImport = createFileRoute('/')()
+import { Route as rootRoute } from "./routes/__root";
+import { Route as pagesIndexImport } from "./routes/(pages)/index";
+import { Route as pagesHomeIndexImport } from "./routes/(pages)/home/index";
 
 // Create/Update Routes
 
-const HomeLazyRoute = HomeLazyImport.update({
-  id: '/home',
-  path: '/home',
+const pagesIndexRoute = pagesIndexImport.update({
+  id: "/(pages)/",
+  path: "/",
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/home.lazy').then((d) => d.Route))
+} as any);
 
-const IndexLazyRoute = IndexLazyImport.update({
-  id: '/',
-  path: '/',
+const pagesHomeIndexRoute = pagesHomeIndexImport.update({
+  id: "/(pages)/home/",
+  path: "/home/",
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+} as any);
 
 // Populate the FileRoutesByPath interface
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/home': {
-      id: '/home'
-      path: '/home'
-      fullPath: '/home'
-      preLoaderRoute: typeof HomeLazyImport
-      parentRoute: typeof rootRoute
-    }
+    "/(pages)/": {
+      id: "/(pages)/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof pagesIndexImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/(pages)/home/": {
+      id: "/(pages)/home/";
+      path: "/home";
+      fullPath: "/home";
+      preLoaderRoute: typeof pagesHomeIndexImport;
+      parentRoute: typeof rootRoute;
+    };
   }
 }
 
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexLazyRoute
-  '/home': typeof HomeLazyRoute
+  "/": typeof pagesIndexRoute;
+  "/home": typeof pagesHomeIndexRoute;
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexLazyRoute
-  '/home': typeof HomeLazyRoute
+  "/": typeof pagesIndexRoute;
+  "/home": typeof pagesHomeIndexRoute;
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexLazyRoute
-  '/home': typeof HomeLazyRoute
+  __root__: typeof rootRoute;
+  "/(pages)/": typeof pagesIndexRoute;
+  "/(pages)/home/": typeof pagesHomeIndexRoute;
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/home'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/home'
-  id: '__root__' | '/' | '/home'
-  fileRoutesById: FileRoutesById
+  fileRoutesByFullPath: FileRoutesByFullPath;
+  fullPaths: "/" | "/home";
+  fileRoutesByTo: FileRoutesByTo;
+  to: "/" | "/home";
+  id: "__root__" | "/(pages)/" | "/(pages)/home/";
+  fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
-  IndexLazyRoute: typeof IndexLazyRoute
-  HomeLazyRoute: typeof HomeLazyRoute
+  pagesIndexRoute: typeof pagesIndexRoute;
+  pagesHomeIndexRoute: typeof pagesHomeIndexRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexLazyRoute: IndexLazyRoute,
-  HomeLazyRoute: HomeLazyRoute,
-}
+  pagesIndexRoute: pagesIndexRoute,
+  pagesHomeIndexRoute: pagesHomeIndexRoute,
+};
 
 export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
 
 /* ROUTE_MANIFEST_START
 {
@@ -101,15 +96,15 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
-        "/home"
+        "/(pages)/",
+        "/(pages)/home/"
       ]
     },
-    "/": {
-      "filePath": "index.lazy.tsx"
+    "/(pages)/": {
+      "filePath": "(pages)/index.tsx"
     },
-    "/home": {
-      "filePath": "home.lazy.tsx"
+    "/(pages)/home/": {
+      "filePath": "(pages)/home/index.tsx"
     }
   }
 }

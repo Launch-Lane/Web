@@ -19,7 +19,9 @@
         "Postman.postman-for-vscode",
         "esbenp.prettier-vscode",
         "YoavBls.pretty-ts-errors",
-        "bradlc.vscode-tailwindcss"
+        "bradlc.vscode-tailwindcss",
+        "streetsidesoftware.code-spell-checker",
+        "eamodio.gitlens"
       ]
     }
   },
